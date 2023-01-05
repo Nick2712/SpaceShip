@@ -10,8 +10,7 @@ namespace SpaceShip
     {
         private ScriptableRenderContext _context;
         private Camera _camera;
-        private readonly CommandBuffer _commandBuffer = 
-            new CommandBuffer { name = bufferName };
+        private CommandBuffer _commandBuffer;
         private const string bufferName = "Camera Render";
         private CullingResults _cullingResult;
         private static readonly List<ShaderTagId> _drawingShaderTagIds = 
@@ -74,6 +73,11 @@ namespace SpaceShip
 #if UNITY_EDITOR
             DrawUI();
 #endif
+
+            _commandBuffer = new CommandBuffer
+            {
+                name = camera.name
+            };
 
             Settings(parameters);
             DrawVisible();
