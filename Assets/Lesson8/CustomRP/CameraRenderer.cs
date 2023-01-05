@@ -56,6 +56,12 @@ namespace SpaceShip
             _context.DrawGizmos(_camera, GizmoSubset.PreImageEffects);
             _context.DrawGizmos(_camera, GizmoSubset.PostImageEffects);
         }
+
+        private void DrawUI()
+        {
+            if (_camera.cameraType == CameraType.SceneView)
+                ScriptableRenderContext.EmitWorldGeometryForSceneView(_camera);
+        }
 #endif
 
         public void Render(ScriptableRenderContext context, Camera camera)
@@ -64,6 +70,10 @@ namespace SpaceShip
             _context = context;
 
             if (!Cull(out ScriptableCullingParameters parameters)) return;
+
+#if UNITY_EDITOR
+            DrawUI();
+#endif
 
             Settings(parameters);
             DrawVisible();
